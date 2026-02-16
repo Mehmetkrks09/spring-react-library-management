@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ders.kutuphane.dto.KitapDTO;
-import com.ders.kutuphane.entity.Kitap;
 import com.ders.kutuphane.service.KitapService;
 @SpringBootTest // Spring bağlamını yükleyerek test eder
 public class KitapServiceTest {
