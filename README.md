@@ -4,9 +4,6 @@ A full-stack web application for managing library books with secure JWT authenti
 
 ## 📸 Screenshots
 
-![Login](screenshots/login.png)
-![Books](screenshots/books.png)
-![Add Book](screenshots/add-book.png)
 
 > Not: screenshotslar will be Added Soon
 
