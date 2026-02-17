@@ -1,19 +1,21 @@
 package com.ders.kutuphane.service;
-
+import com.ders.kutuphane.dto.AuthResponse;
 import com.ders.kutuphane.entity.User;
 import com.ders.kutuphane.repository.UserRepository;
 import com.ders.kutuphane.security.JwtTokenProvider;
 
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
-
+import com.ders.kutuphane.dto.AuthResponse;
 @Service
 public class AuthService implements UserDetailsService {
 
@@ -55,15 +57,20 @@ public class AuthService implements UserDetailsService {
         return "User registered successfully";
     }
 
-    public String login(String username, String password) {
+    public AuthResponse login(String username, String password) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.UNAUTHORIZED, "Invalid username or password"
+            ));
+
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new ResponseStatusException(
+                HttpStatus.UNAUTHORIZED, "Invalid username or password"
+            );
         }
-        
-        UserDetails userDetails = loadUserByUsername(username);
-        return jwtTokenProvider.generateToken(userDetails);
+
+        UserDetails userDetails = loadUserByUsername(user.getUsername());
+        String token = jwtTokenProvider.generateToken(userDetails);
+        return new AuthResponse(token, "Login successful", user.getUsername());
     }
 }
