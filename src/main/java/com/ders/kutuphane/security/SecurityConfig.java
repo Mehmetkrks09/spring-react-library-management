@@ -41,7 +41,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList(
     "http://localhost:5173",
     "https://library-frontend-rnasbv391-mehmetkrks09s-projects.vercel.app",
-    "https://library-frontend-sooty.vercel.app/"
+    "https://library-frontend-sooty.vercel.app"
 ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
